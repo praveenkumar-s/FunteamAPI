@@ -13,7 +13,7 @@ def getdata():
 
 @app.route('/getdata/users/<slackname>',methods=['GET'])
 def getuserdata(slackname):
-    data = read.getdatarray()
+    data = read.getdataarray()
     for element in data['formatted']:
         if(element['Slack id'].strip().lower() == slackname.strip().lower()):
             return str(element)

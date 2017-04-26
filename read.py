@@ -7,6 +7,7 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+from oauth2client.service_account import ServiceAccountCredentials
 import json
 
 try:
@@ -51,6 +52,20 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
+def get_credentials_srvc():
+    """Gets valid user credentials from storage.
+
+    If nothing has been stored, or if the stored credentials are invalid,
+    the OAuth2 flow is completed to obtain the new credentials.
+
+    Returns:
+        Credentials, the obtained credential.
+    """
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(
+        'client_secret.json', scopes=SCOPES)
+    return credentials
+
+
 def getsheetdata():
     """Shows basic usage of the Sheets API.
 
@@ -58,7 +73,7 @@ def getsheetdata():
     students in a sample spreadsheet:
     https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
     """
-    credentials = get_credentials()
+    credentials = get_credentials_srvc()
     http = credentials.authorize(httplib2.Http())
     discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                     'version=v4')

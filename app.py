@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Hello,!! World!"
+    return "This is the official API for South beach's fun team data management. Contact Jagan / Ponmani for any assistance!! "
 
 @app.route('/getdata')
 def getdata():
@@ -39,7 +39,7 @@ def parsedate(indate):
     x = str(datetime.date.today())
     datearray = x.split('-')
     indatearray = indate.strip().split(' ')
-    if (indatearray[0] == month[int(datearray[1])] and int(indatearray[1]) == int(datearray[2])):
+    if (indatearray[0].lower() == month[int(datearray[1])].lower() and int(indatearray[1]) == int(datearray[2])):
         return True
     else:
         return False

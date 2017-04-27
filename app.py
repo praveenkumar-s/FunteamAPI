@@ -40,7 +40,7 @@ def getbirthdays():
 #         if(parsedate(element['Birth Month'])):
 #             outdata.append(element)
 #     for item in outdata:
-#         URL='https://slack.com/api/chat.postMessage?token=xoxp-2517532264-126093546167-175381339458-da20ef65b49197d76c8dd49c5ec3813b&channel=%40jaganath&text=Wish you a very happy birthday {USER} :birthday:&pretty=1'
+#         URL='https://slack.com/api/chat.postMessage?token=XXXXXXX&channel=%40jaganath&text=Wish you a very happy birthday {USER} :birthday:&pretty=1'
 #         URL= URL.replace('{USER}', str(item['Slack id']))
 #         requests.post(URL)
 #

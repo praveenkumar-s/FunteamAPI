@@ -3,7 +3,15 @@ import read
 import datetime
 import json
 import requests
+from flask import request
+import Mosquitopublisher as pub
+
 app = Flask(__name__)
+
+def reroute(url,payload):
+    resp=requests.post(url=url,data=payload)
+    print resp.content
+    return str(resp.content)
 
 @app.route('/')
 def index():
@@ -20,6 +28,24 @@ def getuserdata(slackname):
         if(element['Slack id'].strip().lower() == slackname.strip().lower()):
             return str(element)
     return "No results found!"
+
+@app.route('/forward',methods=['POST'])
+def forward():
+    print request#request.headers.get('forward_target')
+    #resp=requests.post(url='https://moviebuffapiai.herokuapp.com/webhook',data=str(request.data),headers=request.headers)
+    resp=reroute(url=request.headers.get('forward_target'),payload=str(request.data))
+    try:
+        pub.Publish(topic='QUBE-AI',message=request.json+str(request.headers)+str(request.data))
+    except:
+        print 'publish failed'
+    #print request.json
+    #print 'headers'
+    #print request.headers
+    #print 'data'
+    #print request.data
+    return str(resp)
+
+
 
 @app.route('/birthdays')
 def getbirthdays():
@@ -59,6 +85,8 @@ def parsedate(indate):
         return True
     else:
         return False
+
+
 
 if __name__ == '__main__':
     from os import environ

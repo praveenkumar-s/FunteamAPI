@@ -8,8 +8,10 @@ Jinja2==2.9.6
 MarkupSafe==1.0
 oauth2client==4.0.0
 packaging==16.8
+paho-mqtt==1.3.0
 pyasn1==0.2.3
 pyasn1-modules==0.0.8
+PyDbLite==3.0.4
 pyparsing==2.2.0
 requests==2.13.0
 rsa==3.4.2

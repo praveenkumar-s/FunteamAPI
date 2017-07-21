@@ -32,10 +32,9 @@ def getuserdata(slackname):
 @app.route('/forward',methods=['POST'])
 def forward():
     print request#request.headers.get('forward_target')
-    #resp=requests.post(url='https://moviebuffapiai.herokuapp.com/webhook',data=str(request.data),headers=request.headers)
     resp=reroute(url=request.headers.get('forward_target'),payload=str(request.data))
     try:
-        pub.Publish(topic='QUBE-AI',message=request.json+str(request.headers)+str(request.data))
+        pub.Publish(topic='QUBE-AI',message=  'HEADERS:\n' +str(request.headers)+'DATA:\n'+str(request.data))
     except:
         print 'publish failed'
     #print request.json
@@ -43,7 +42,7 @@ def forward():
     #print request.headers
     #print 'data'
     #print request.data
-    return str(resp)
+    return resp
 
 
 

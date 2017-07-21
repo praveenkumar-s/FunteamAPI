@@ -32,12 +32,9 @@ def getuserdata(slackname):
 @app.route('/forward',methods=['POST'])
 def forward():
     print request#request.headers.get('forward_target')
-    try:
+    header='https://moviebuffapiai.herokuapp.com/webhook'
+    if(request.headers.get('forward_target')):
         header=request.headers.get('forward_target')
-        if(header==''):
-            header='https://moviebuffapiai.herokuapp.com/webhook'
-    except:
-        header = 'https://moviebuffapiai.herokuapp.com/webhook'
 
     resp=reroute(url=header,payload=str(request.data))
     try:

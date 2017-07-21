@@ -32,7 +32,14 @@ def getuserdata(slackname):
 @app.route('/forward',methods=['POST'])
 def forward():
     print request#request.headers.get('forward_target')
-    resp=reroute(url=request.headers.get('forward_target'),payload=str(request.data))
+    try:
+        header=request.headers.get('forward_target')
+        if(header==''):
+            header='https://moviebuffapiai.herokuapp.com/webhook'
+    except:
+        header = 'https://moviebuffapiai.herokuapp.com/webhook'
+
+    resp=reroute(url=header,payload=str(request.data))
     try:
         pub.Publish(topic='QUBE-AI',message=  'HEADERS:\n' +str(request.headers)+'DATA:\n'+str(request.data))
     except:

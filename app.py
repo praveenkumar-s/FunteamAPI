@@ -21,6 +21,13 @@ def index():
 def getdata():
     return read.getsheetdata()
 
+@app.route('/getsheetdata')
+def getsheetdata():
+    sheetid=str(request.headers['Sheet-Id'])
+    cellrange=str(request.headers['Range'])
+    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
+
+
 @app.route('/getdata/users/<slackname>',methods=['GET'])
 def getuserdata(slackname):
     data = read.getdataarray()

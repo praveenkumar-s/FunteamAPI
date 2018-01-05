@@ -124,7 +124,7 @@ def getdataarray():
                               discoveryServiceUrl=discoveryUrl)
 
     spreadsheetId = '1-k4_LLWE1KfNWksNt0OkFIxpDSy-Xu2md84PC7zMzuw'
-    rangeName = 'A1:Z62'
+    rangeName = 'A1:Z68'
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, range=rangeName).execute()
     values = result.get('values', [])
@@ -159,3 +159,49 @@ def getdataarray():
 
 #for e in x['formatted']:
 #    print (e['Slack id'])
+def getgenericdataarray(spreadhseetid,cellrange=None):
+    """Shows basic usage of the Sheets API.
+
+    Creates a Sheets API service object and prints the names and majors of
+    students in a sample spreadsheet:
+    https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+    """
+    credentials = get_credentials_srvc()
+    http = credentials.authorize(httplib2.Http())
+    discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
+                    'version=v4')
+    service = discovery.build('sheets', 'v4', http=http,
+                              discoveryServiceUrl=discoveryUrl)
+
+    spreadsheetId = spreadhseetid
+    if(cellrange==None):
+        rangeName = 'A1:Z62'
+    else:
+        rangeName=cellrange
+    result = service.spreadsheets().values().get(
+        spreadsheetId=spreadsheetId, range=rangeName).execute()
+    values = result.get('values', [])
+
+    if not values:
+        print('No data found.')
+    else:
+        #print('Name, Major:')
+        #for row in values:
+            # Print columns A and E, which correspond to indices 0 and 4.
+        #    print('%s, %s' % (row[0], row[1]))
+        mdict=[]
+        for j in range(1, len(values)):
+            dict = {}
+            for i in range(0, len(values[0])):
+                val=''
+                try:
+                    val = str(values[j][i])
+                except:
+                    val=''
+                if(values[0][i]!=''):
+                    dict[values[0][i]] = val
+            mdict.append(dict)
+        obj={}
+        obj['rawdata']=values
+        obj['formatted']=mdict
+        return obj

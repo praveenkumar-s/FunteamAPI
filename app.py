@@ -27,6 +27,11 @@ def getsheetdata():
     cellrange=str(request.headers['Range'])
     return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
 
+@app.route('/getgooglesheetdata')
+def getgooglesheetdata():
+    sheetid=str(request.args.get('Sheet-Id'))
+    cellrange=str(request.args.get('Range'))
+    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
 
 @app.route('/getdata/users/<slackname>',methods=['GET'])
 def getuserdata(slackname):

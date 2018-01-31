@@ -68,20 +68,30 @@ def insertresults():
     result_data=request.data
     print result_data
     cur=db.conn.cursor()
-    cur.execute("SELECT insert_results(%s);",(result_data,))
-    #cur.execute("INSERT INTO tautomationresults (date,data) VALUES (now(),'{0}');".format(result_data))
-    cur.fetchone()[0]
-    db.conn.commit()
-    cur.execute("SELECT getkey();")
-    resp=cur.fetchone()[0] 
-    return str(resp)
+    try:
+        cur.execute("SELECT insert_results(%s);",(result_data,))
+        cur.fetchone()[0]
+        db.conn.commit()
+    except:
+        db.conn.commit()
+    try:
+        cur.execute("SELECT getkey();")
+        resp=cur.fetchone()[0] 
+        return str(resp)
+    except:
+        db.conn.commit()
+        return 0
 
 @app.route('/getautomationresults')
 def getautomationresults():
     key=str(request.args.get('key'))
     cur=db.conn.cursor()
-    cur.execute("select get_results('{0}')".format(key))
-    data=cur.fetchone()[0]
+    data=''
+    try:
+        cur.execute("select get_results('{0}')".format(key))
+        data=cur.fetchone()[0]
+    except:
+        db.conn.commit()
     return data    
 
 

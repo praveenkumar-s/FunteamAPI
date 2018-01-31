@@ -1,4 +1,4 @@
-
+ # -*- coding: utf-8 -*-
 from __future__ import print_function
 import httplib2
 import os
@@ -195,7 +195,7 @@ def getgenericdataarray(spreadhseetid,cellrange=None):
             for i in range(0, len(values[0])):
                 val=''
                 try:
-                    val = str(values[j][i])
+                    val = str(values[j][i]).encode('raw-unicode-escape').decode('utf-8')
                 except:
                     val=''
                 if(values[0][i]!=''):

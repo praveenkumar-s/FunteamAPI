@@ -137,6 +137,7 @@ HTML_TEMPLATE="""<html>
     Your browser doesn't support iframes
 </iframe>
 <meta http-equiv="refresh" content="30">
+<body bgcolor="black">
 </body>
 </html>"""
 

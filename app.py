@@ -7,6 +7,7 @@ from flask import request
 import Mosquitopublisher as pub
 import testdata
 import dbservice as db
+import slydes_demo_server as SDS
 
 
 app = Flask(__name__)
@@ -127,7 +128,24 @@ def getresults():
 #
 #     return json.dumps(outdata)
 
+HTML_TEMPLATE="""<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+	<iframe src="{0}" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+    Your browser doesn't support iframes
+</iframe>
+<meta http-equiv="refresh" content="30">
+</body>
+</html>"""
 
+
+@app.route("/greetings")
+def render_greetings():
+    id=str(request.args.get('id'))
+    url=SDS.get_latest_data(id)
+    return HTML_TEMPLATE.format(url)
 
 
 def parsedate(indate):

@@ -8,7 +8,7 @@ import Mosquitopublisher as pub
 import testdata
 import dbservice as db
 import slydes_demo_server as SDS
-
+ServedURL={}
 
 app = Flask(__name__)
 
@@ -130,7 +130,7 @@ def getresults():
 
 HTML_TEMPLATE="""<html>
 <head>
-<title>Page Title</title>
+<title>Cheers!!</title>
 </head>
 <body>
 	<iframe src="{0}" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
@@ -142,12 +142,30 @@ HTML_TEMPLATE="""<html>
 </html>"""
 
 
+
 @app.route("/greetings")
 def render_greetings():
-    id=str(request.args.get('id'))
-    url=SDS.get_latest_data(id)
-    return HTML_TEMPLATE.format(url)
-
+    global ServedURL
+    replay=True
+    if(request.args.get('replay')=="false"):
+        replay=False
+    if(replay==True):
+        id=str(request.args.get('id'))
+        url=SDS.get_latest_data(id)
+        return HTML_TEMPLATE.format(url)
+    else:
+        id=str(request.args.get('id'))
+        url=SDS.get_latest_data(id)
+        su=None
+        try:
+            su=ServedURL[id]
+        except:
+            pass
+        if(su!=url):
+            ServedURL[id]=url
+            return HTML_TEMPLATE.format(url) 
+        else:
+            return HTML_TEMPLATE.format("https://data.justickets.co/assets/cheers_tagline.svg")
 
 def parsedate(indate):
     month = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',

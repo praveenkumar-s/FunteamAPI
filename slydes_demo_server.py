@@ -16,9 +16,12 @@ def get_latest_data(id):
                 latestdate=parse(items["greeting"][0]["timestamp"])
                 url=items["greeting"][0]["preview"]
             else:
-                if(parse(items["greeting"][0]["timestamp"]) > latestdate):
-                    latestdate=parse(items["greeting"][0]["timestamp"])
-                    url=items["greeting"][0]["preview"]
+                try:
+                    if(parse(items["greeting"][0]["timestamp"]) > latestdate):
+                        latestdate=parse(items["greeting"][0]["timestamp"])
+                        url=items["greeting"][0]["preview"]
+                except:
+                    pass
     return url
    
 

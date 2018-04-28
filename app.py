@@ -29,7 +29,7 @@ def getdata():
 def getsheetdata():
     sheetid=str(request.headers['Sheet-Id'])
     cellrange=str(request.headers['Range'])
-    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
+    return read.getgenericdataarray(sheetid,cellrange=cellrange)
 
 @app.route('/getgooglesheetdata')
 def getgooglesheetdata():
@@ -133,9 +133,13 @@ HTML_TEMPLATE="""<html>
 <title>Cheers!!</title>
 </head>
 <body>
-	<iframe src="{0}" style="position:fixed; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;">
+<div style="display:flex;justify-content:center;align-items:center;width:100%;">
+
+ <iframe src="{0}">
     Your browser doesn't support iframes
 </iframe>
+</div>
+	
 <meta http-equiv="refresh" content="30">
 <body bgcolor="black">
 </body>

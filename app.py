@@ -35,7 +35,7 @@ def getsheetdata():
 def getgooglesheetdata():
     sheetid=str(request.args.get('Sheet-Id'))
     cellrange=str(request.args.get('Range'))
-    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
+    return read.getgenericdataarray(sheetid,cellrange=cellrange)
 
 @app.route('/getdata/users/<slackname>',methods=['GET'])
 def getuserdata(slackname):

@@ -29,13 +29,13 @@ def getdata():
 def getsheetdata():
     sheetid=str(request.headers['Sheet-Id'])
     cellrange=str(request.headers['Range'])
-    return read.getgenericdataarray(sheetid,cellrange=cellrange)
+    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
 
 @app.route('/getgooglesheetdata')
 def getgooglesheetdata():
     sheetid=str(request.args.get('Sheet-Id'))
     cellrange=str(request.args.get('Range'))
-    return read.getgenericdataarray(sheetid,cellrange=cellrange)
+    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
 
 @app.route('/getdata/users/<slackname>',methods=['GET'])
 def getuserdata(slackname):

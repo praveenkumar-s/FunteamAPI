@@ -81,7 +81,7 @@ def getsheetdata():
                               discoveryServiceUrl=discoveryUrl)
 
     spreadsheetId = '1-k4_LLWE1KfNWksNt0OkFIxpDSy-Xu2md84PC7zMzuw'
-    rangeName = 'A1:Z68'
+    rangeName = 'A1:Z78'
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, range=rangeName).execute()
     values = result.get('values', [])
@@ -124,7 +124,7 @@ def getdataarray():
                               discoveryServiceUrl=discoveryUrl)
 
     spreadsheetId = '1-k4_LLWE1KfNWksNt0OkFIxpDSy-Xu2md84PC7zMzuw'
-    rangeName = 'A1:Z68'
+    rangeName = 'A1:Z78'
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, range=rangeName).execute()
     values = result.get('values', [])
@@ -175,7 +175,7 @@ def getgenericdataarray(spreadhseetid,cellrange=None):
 
     spreadsheetId = spreadhseetid
     if(cellrange==None):
-        rangeName = 'A1:Z62'
+        rangeName = 'A1:Z78'
     else:
         rangeName=cellrange
     result = service.spreadsheets().values().get(

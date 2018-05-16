@@ -11,20 +11,21 @@ def get_latest_data(id):
     data= json.loads(HISTORY_DATA.content)
 
     for items in data["orders"]:
-        if(items["greeting"] is not None):
+        if(len(items["greeting"])!=0):
             if(latestdate is None):
                 latestdate=parse(items["greeting"][0]["timestamp"])
                 url=items["greeting"][0]["preview"]
             else:
-                try:
-                    if(parse(items["greeting"][0]["timestamp"]) > latestdate):
-                        latestdate=parse(items["greeting"][0]["timestamp"])
-                        url=items["greeting"][0]["preview"]
-                except:
-                    pass
+                if(parse(items["greeting"][0]["timestamp"]) > latestdate):
+                    latestdate=parse(items["greeting"][0]["timestamp"])
+                    url=items["greeting"][0]["preview"]
     return url
    
 
 
 
 
+
+
+
+print get_latest_data('77e4b846-2bc1-479b-89b5-9a8763c2ff7a')

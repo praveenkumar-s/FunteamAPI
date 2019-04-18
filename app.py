@@ -8,9 +8,11 @@ import Mosquitopublisher as pub
 import testdata
 import dbservice as db
 import slydes_demo_server as SDS
+import firebaseClient as FBC
 ServedURL={}
 
 app = Flask(__name__)
+firebaseInstance=FBC.firebase_client()
 
 def reroute(url,payload):
     resp=requests.post(url=url,data=payload)
@@ -20,6 +22,18 @@ def reroute(url,payload):
 @app.route('/')
 def index():
     return "This is the official API for South beach's fun team data management. Contact Jagan / Ponmani for any assistance!! "
+
+@app.route('/ga_webhook',methods=['POST'])
+def ga_webhook():
+    data= json.loads(request.data)
+    if(data['intent']['displayName']=="Turn ON"):
+        firebaseInstance.putvalue(child="status",data=1)
+        return 'OK'
+    elif(data['intent']['displayName']=="Turn OFF"):        
+        firebaseInstance.putvalue(child="status",data=0)
+        return 'OK'
+    else:
+        return 'bad,request',400
 
 @app.route('/getdata')
 def getdata():

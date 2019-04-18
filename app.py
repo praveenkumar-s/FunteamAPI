@@ -26,10 +26,10 @@ def index():
 @app.route('/ga_webhook',methods=['POST'])
 def ga_webhook():
     data= json.loads(request.data)
-    if(data['intent']['displayName']=="Turn ON"):
+    if(data["queryResult"]['intent']['displayName']=="Turn ON"):
         firebaseInstance.putvalue(child="status",data=1)
         return 'OK'
-    elif(data['intent']['displayName']=="Turn OFF"):        
+    elif(data["queryResult"]['intent']['displayName']=="Turn OFF"):        
         firebaseInstance.putvalue(child="status",data=0)
         return 'OK'
     else:

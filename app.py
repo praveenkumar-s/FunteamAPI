@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import read
 import datetime
 import json
@@ -43,7 +43,7 @@ def getdata():
 def getsheetdata():
     sheetid=str(request.headers['Sheet-Id'])
     cellrange=str(request.headers['Range'])
-    return str(read.getgenericdataarray(sheetid,cellrange=cellrange))
+    return jsonify(read.getgenericdataarray(sheetid,cellrange=cellrange))
 
 @app.route('/getgooglesheetdata')
 def getgooglesheetdata():

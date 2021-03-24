@@ -15,7 +15,7 @@ pyasn1-modules==0.0.8
 PyDbLite==3.0.4
 pyparsing==2.2.0
 requests==2.13.0
-rsa==3.4.2
+rsa==4.2
 six==1.10.0
 uritemplate==3.0.0
 Werkzeug==0.12.1

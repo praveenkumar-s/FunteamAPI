@@ -14,7 +14,7 @@ pyasn1-modules
 PyDbLite==3.0.4
 pyparsing==2.2.0
 requests
-rsa==3.4.2
+rsa==4.7
 six
 uritemplate
 Werkzeug

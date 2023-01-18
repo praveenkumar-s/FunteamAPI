@@ -7,7 +7,7 @@ from flask import request
 import Mosquitopublisher as pub
 import testdata
 import dbservice as db
-import slydes_demo_server as SDS
+#import slydes_demo_server as SDS
 import firebaseClient as FBC
 ServedURL={}
 
@@ -16,7 +16,7 @@ firebaseInstance=FBC.firebase_client()
 
 def reroute(url,payload):
     resp=requests.post(url=url,data=payload)
-    print resp.content
+    print(resp.content)
     return str(resp.content)
 
 @app.route('/')
@@ -61,7 +61,7 @@ def getuserdata(slackname):
 
 @app.route('/forward',methods=['POST'])
 def forward():
-    print request#request.headers.get('forward_target')
+    print(request)#request.headers.get('forward_target')
     header='https://moviebuffapiai.herokuapp.com/webhook'
     if(request.headers.get('forward_target')):
         header=request.headers.get('forward_target')
@@ -70,7 +70,7 @@ def forward():
     try:
         pub.Publish(topic='QUBE-AI',message=  'HEADERS:\n' +str(request.headers)+'DATA:\n'+str(request.data))
     except:
-        print 'publish failed'
+        print('publish failed')
     #print request.json
     #print 'headers'
     #print request.headers
@@ -81,7 +81,7 @@ def forward():
 @app.route('/insertresults',methods=['POST'])
 def insertresults():
     result_data=request.data
-    print result_data
+    print(result_data)
     cur=db.conn.cursor()
     try:
         cur.execute("SELECT insert_results(%s);",(result_data,))
@@ -161,40 +161,40 @@ HTML_TEMPLATE="""<html>
 
 
 
-@app.route("/greetings")
-def render_greetings():
-    global ServedURL
-    replay=True
-    if(request.args.get('replay')=="false"):
-        replay=False
-    if(replay==True):
-        id=str(request.args.get('id'))
-        url=SDS.get_latest_data(id)
-        return HTML_TEMPLATE.format(url)
-    else:
-        id=str(request.args.get('id'))
-        url=SDS.get_latest_data(id)
-        su=None
-        try:
-            su=ServedURL[id]
-        except:
-            pass
-        if(su!=url):
-            ServedURL[id]=url
-            return HTML_TEMPLATE.format(url) 
-        else:
-            return HTML_TEMPLATE.format("https://data.justickets.co/assets/cheers_tagline.svg")
+# @app.route("/greetings")
+# def render_greetings():
+#     global ServedURL
+#     replay=True
+#     if(request.args.get('replay')=="false"):
+#         replay=False
+#     if(replay==True):
+#         id=str(request.args.get('id'))
+#         url=SDS.get_latest_data(id)
+#         return HTML_TEMPLATE.format(url)
+#     else:
+#         id=str(request.args.get('id'))
+#         url=SDS.get_latest_data(id)
+#         su=None
+#         try:
+#             su=ServedURL[id]
+#         except:
+#             pass
+#         if(su!=url):
+#             ServedURL[id]=url
+#             return HTML_TEMPLATE.format(url) 
+#         else:
+#             return HTML_TEMPLATE.format("https://data.justickets.co/assets/cheers_tagline.svg")
 
-def parsedate(indate):
-    month = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-             'October', 'November', 'December']
-    x = str(datetime.date.today())
-    datearray = x.split('-')
-    indatearray = indate.strip().split(' ')
-    if (indatearray[0].lower() == month[int(datearray[1])].lower() and int(indatearray[1]) == int(datearray[2])):
-        return True
-    else:
-        return False
+# def parsedate(indate):
+#     month = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+#              'October', 'November', 'December']
+#     x = str(datetime.date.today())
+#     datearray = x.split('-')
+#     indatearray = indate.strip().split(' ')
+#     if (indatearray[0].lower() == month[int(datearray[1])].lower() and int(indatearray[1]) == int(datearray[2])):
+#         return True
+#     else:
+#         return False
 
 
 

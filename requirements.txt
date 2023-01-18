@@ -4,7 +4,7 @@ Flask==0.12.1
 google-api-python-client
 httplib2==0.10.3
 itsdangerous==0.24
-Jinja2==2.9.6
+Jinja2==2.11.3
 MarkupSafe==2.1.2
 oauth2client
 packaging==16.8
